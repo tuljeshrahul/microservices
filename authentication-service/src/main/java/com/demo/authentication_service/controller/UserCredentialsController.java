@@ -23,19 +23,16 @@ public class UserCredentialsController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public UserCredentialsEntity register(@RequestBody UserCredentialsEntity user) {
 		return userCredService.register(user);
 	}
 	
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("/validate/token")
 	public boolean validateToken(@RequestParam String token) {
 		return userCredService.verifyToken(token);
 	}
 	
-	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@PostMapping("/validate/user")
 	public String getToken(@RequestBody UserCredentialsEntity user) {
 		System.out.println("user : " + user);

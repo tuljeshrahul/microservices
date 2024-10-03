@@ -26,7 +26,10 @@ public class AuthConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+			.authorizeHttpRequests(auth -> auth
+					.requestMatchers("/departments/**").hasRole("ADMIN") // Only users with ADMIN role can access /admin/**
+		            .requestMatchers("/employees/**").hasAnyRole("USER", "ADMIN")
+					.anyRequest().permitAll())
 			.headers((headers) -> headers.frameOptions((frame) -> frame.sameOrigin()));
 		return http.build();
 	}
